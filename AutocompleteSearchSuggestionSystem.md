@@ -53,26 +53,38 @@ This system combines a low-latency in-memory prefix index (Redis/MemoryDB + Redi
 
 ```mermaid
 flowchart LR
-A[Browser Client (React / Web)] --> CF[CloudFront CDN]
-CF --> AGW[API Gateway / ALB]
-AGW --> QS[Query Service (EKS/ECS)]
-AGW --> IS[Ingest Service (EKS/ECS)]
-QS --> REDIS[(ElastiCache / MemoryDB Redis Cluster)]
-QS --> DDB[(DynamoDB / Aurora)]
-IS --> K[Amazon Kinesis / MSK Kafka]
-K --> IDX[Indexers (EKS/ Lambda Consumers)]
-IDX --> REDIS
-IDX --> DDB
-Analytics[Analytics & ML Jobs (EMR / Glue / Dataflow)] --> DDB
-Analytics --> S3[Bucket (Model & Bulk Index snapshots)]
+  A["Browser Client (React / Web)"]
+  CF["CloudFront CDN"]
+  AGW["API Gateway / ALB"]
+  QS["Query Service (EKS/ECS)"]
+  IS["Ingest Service (EKS/ECS)"]
+  REDIS["ElastiCache / MemoryDB Redis Cluster"]
+  DDB["DynamoDB / Aurora"]
+  K["Amazon Kinesis / MSK Kafka"]
+  IDX["Indexers (EKS / Lambda Consumers)"]
+  Analytics["Analytics & ML Jobs (EMR / Glue / Dataflow)"]
+  S3["Bucket (Model & Bulk Index snapshots)"]
+  Xray["AWS X-Ray"]
+  CW["CloudWatch"]
+  A --> CF
+  CF --> AGW
+  AGW --> QS
+  AGW --> IS
+  QS --> REDIS
+  QS --> DDB
+  IS --> K
+  K --> IDX
+  IDX --> REDIS
+  IDX --> DDB
+  Analytics --> DDB
+  Analytics --> S3
+  QS --> Xray
+  IS --> Xray
+  IDX --> Xray
+  QS --> CW
+  IS --> CW
+  IDX --> CW
 
-
-QS --> Xray[AWS X-Ray]
-IS --> Xray
-IDX --> Xray
-QS --> CW[CloudWatch]
-IS --> CW
-IDX --> CW
 ```
 
 **GCP equivalents:** Cloud CDN + Cloud Run/GKE, Pub/Sub, Memorystore, Bigtable/Firestore.
