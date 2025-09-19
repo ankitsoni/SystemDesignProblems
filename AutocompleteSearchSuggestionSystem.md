@@ -400,9 +400,9 @@ sequenceDiagram
 ```mermaid
 flowchart TB
   subgraph Region[aws-region]
-    ALB[ALB/API Gateway]
-    ALB --> ASG[QueryService (EKS Pods)]
-    ALB --> ASG2[IngestService (EKS Pods)]
+    ALB["ALB/API Gateway"]
+    ALB --> ASG["QueryService (EKS Pods)"]
+    ALB --> ASG2["IngestService (EKS Pods)"]
     ASG --> Redis
     ASG --> DynamoDB
     ASG2 --> Kinesis
