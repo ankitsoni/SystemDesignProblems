@@ -1,6 +1,5 @@
 # Real-time Notification System
 
-![Architecture](./docs/architecture.png)
 
 > A scalable, production-ready design for a real-time notification / messaging system (Slack / Facebook Messenger style). Includes connection gateways, durable messaging backbone, fanout workers, presence, push notifications, and persistence.
 
